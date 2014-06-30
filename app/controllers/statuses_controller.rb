@@ -1,4 +1,6 @@
 class StatusesController < ApplicationController
+  before_action :authenticate_user!, only: [:new, :create]
+
   def show
     @status = Status.find(params[:id])
   end

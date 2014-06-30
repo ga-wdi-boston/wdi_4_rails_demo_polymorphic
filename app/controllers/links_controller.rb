@@ -1,4 +1,6 @@
 class LinksController < ApplicationController
+  before_action :authenticate_user!, only: [:new, :create]
+
   def show
     @link = Link.find(params[:id])
   end
