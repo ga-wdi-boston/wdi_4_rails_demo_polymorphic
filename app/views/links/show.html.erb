@@ -1,0 +1,7 @@
+<p>
+  <%= link_to @link.title, @link.url %><br>
+  <i>
+    &mdash; <%= @link.user.email %>
+    <%= time_ago_in_words(@link.created_at) %> ago
+  </i>
+</p>
