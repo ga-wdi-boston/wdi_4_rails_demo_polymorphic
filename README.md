@@ -76,6 +76,28 @@ Reloading...
  => #<ActiveRecord::Associations::CollectionProxy [#<Comment id: 2, user_id: 1, commentable_id: 1, commentable_type: "Link", content: "derp">]>
 ```
 
+At this point it might help to add a display of comments to the actual app:
+
+```erb
+<% # Add to the bottom of app/views/links/show.html.erb %>
+<%= render @link.comments %>
+```
+
+```erb
+<% # Add to the bottom of app/views/statuses/show.html.erb %>
+<%= render @status.comments %>
+```
+
+```erb
+<% # Create this in app/views/comments/_comment.html.erb %>
+<p>
+  <i><%= comment.user.email %> commented:</i><br>
+  <%= comment.content %>
+</p>
+```
+
+You should now be able to start the app, go to the "comments" link for a status or link, and view the comments you created in the console.
+
 ### Routes and Forms
 
 Since we need a status or link to create a comment, it would make sense to nest the route for comment creation under those resources. We'll put the form for comment creation directly on the status/link page, so we only need to worry about the `create` route.
@@ -203,3 +225,5 @@ Let's take the process of finding the "target" model one step at a time, startin
 * First we need to find out whether we have a `params[:status_id]` or a `params[:link_id]`. The `commentable_type` method does this and returns the string `'status'` or `'link'` as appropriate.
 * Then we need to actually fetch the status ID or link ID from the params. The `commentable_id` method does this.
 * Finally, combining these two pieces of information, the `commentable` method transforms the type string into a constant and calls `.find` on it, passing the ID from the params.
+
+The rest of the controller works pretty much the same as all the other controllers we've written to date &ndash; the tricky part is getting the "commentable" in the first place.
