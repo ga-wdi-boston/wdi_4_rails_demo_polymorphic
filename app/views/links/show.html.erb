@@ -1,1 +1,3 @@
 <p><%= render @link %></p>
+<p><%= link_to 'Leave a comment', new_link_comment_path(@link) %></p>
+<%= render @link.comments %>
