@@ -57,7 +57,12 @@ $ rails c
 
 As seen here, we can now set the "commentable" of a Comment to be either a Status or a Link, and the `commentable_type` attribute is set appropriately. We can then retrieve it just like we would with an ordinary association.
 
-Now to link up the other end of the relationship:
+Now to link up the other ends of the relationships:
+
+```ruby
+# Add this to user.rb
+has_many :comments
+```
 
 ```ruby
 # Add this to both status.rb and link.rb
@@ -227,3 +232,11 @@ Let's take the process of finding the "target" model one step at a time, startin
 * Finally, combining these two pieces of information, the `commentable` method transforms the type string into a constant and calls `.find` on it, passing the ID from the params.
 
 The rest of the controller works pretty much the same as all the other controllers we've written to date &ndash; the tricky part is getting the "commentable" in the first place.
+
+### Checkpoint
+
+The `done-comments` branch contains all work completed up to this point.
+
+## Lab: Likes
+
+Let's say we now want to allow signed-in users to "like" both statuses and links. In some respects this will be easier than commenting, since there will be no separate "new like" page with a form on it &ndash; we can just have a button that directly likes or un-likes the model in question, with no possibility of validation errors.
