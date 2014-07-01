@@ -1,7 +1,1 @@
-<p>
-  <%= @status.content %><br>
-  <i>
-    &mdash; <%= @status.user.email %>
-    <%= time_ago_in_words(@status.created_at) %> ago
-  </i>
-</p>
+<p><%= render @status %></p>

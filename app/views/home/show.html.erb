@@ -1,11 +1,7 @@
 <h1>Statuses</h1>
 <% @statuses.each do |status| %>
   <p>
-    <%= status.content %><br>
-    <i>
-      &mdash; <%= status.user.email %>
-      <%= time_ago_in_words(status.created_at) %> ago
-    </i>
+    <%= render status %>
     | <%= link_to 'comments', status %>
   </p>
 <% end %>
@@ -13,11 +9,7 @@
 <h1>Links</h1>
 <% @links.each do |link| %>
   <p>
-    <%= link_to link.title, link.url %><br>
-    <i>
-      &mdash; <%= link.user.email %>
-      <%= time_ago_in_words(link.created_at) %> ago
-    </i>
+    <%= render link %>
     | <%= link_to 'comments', link %>
   </p>
 <% end %>
