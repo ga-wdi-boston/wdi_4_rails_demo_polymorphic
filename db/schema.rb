@@ -23,6 +23,9 @@ ActiveRecord::Schema.define(version: 20140630203645) do
     t.text    "content"
   end
 
+  add_index "comments", ["commentable_id", "commentable_type"], name: "index_comments_on_commentable_id_and_commentable_type", using: :btree
+  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
+
   create_table "links", force: true do |t|
     t.integer  "user_id"
     t.text     "url",        null: false
