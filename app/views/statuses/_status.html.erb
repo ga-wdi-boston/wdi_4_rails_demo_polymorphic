@@ -3,3 +3,11 @@
   &mdash; <%= status.user.email %>
   <%= time_ago_in_words(status.created_at) %> ago
 </i>
+|
+<% if user_signed_in? %>
+  <% if current_user.like_for(status).present? %>
+    <%= link_to 'unlike', status_like_path(status, current_user.like_for(status)), method: :delete %>
+  <% else %>
+    <%= link_to 'like', status_likes_path(status), method: :post %>
+  <% end %>
+<% end %>
