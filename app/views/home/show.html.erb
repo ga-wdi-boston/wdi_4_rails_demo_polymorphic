@@ -6,6 +6,7 @@
       &mdash; <%= status.user.email %>
       <%= time_ago_in_words(status.created_at) %> ago
     </i>
+    | <%= link_to 'comments', status %>
   </p>
 <% end %>
 
@@ -17,5 +18,6 @@
       &mdash; <%= link.user.email %>
       <%= time_ago_in_words(link.created_at) %> ago
     </i>
+    | <%= link_to 'comments', link %>
   </p>
 <% end %>
