@@ -172,12 +172,16 @@ Now we just need a link to this form before we can get started on the controller
 
 ```erb
 <% # Add to the bottom of app/views/links/show.html.erb %>
-<p><%= link_to 'Leave a comment', new_link_comment_path(@link) %></p>
+<% if user_signed_in? %>
+  <p><%= link_to 'Leave a comment', new_link_comment_path(@link) %></p>
+<% end %>
 ```
 
 ```erb
 <% # Add to the bottom of app/views/statuses/show.html.erb %>
-<p><%= link_to 'Leave a comment', new_status_comment_path(@status) %></p>
+<% if user_signed_in? %>
+  <p><%= link_to 'Leave a comment', new_status_comment_path(@status) %></p>
+<% end %>
 ```
 
 ### The Controller
@@ -186,6 +190,8 @@ Finally, we need to write the controller that will display and process this form
 
 ```ruby
 class CommentsController < ApplicationController
+  before_action :authenticate_user!
+
   def new
     @commentable = commentable
     @comment = Comment.new
@@ -256,10 +262,12 @@ In the `_link.html.erb` and `_status.html.erb` partials, create a button that wi
 For example, this would construct a "create Like" button for the Status partial:
 
 ```erb
-<%= button_to 'Like', status_likes_path, method: :post %>
+<%= button_to 'Like', status_likes_path(status), method: :post %>
 ```
 
 It's up to you how to handle the like/unlike conditional, but keep in mind that we want to avoid accessing ActiveRecord methods directly from our views. You might want to create a `like_for(likeable)` method on your User model that finds the Like object for a given "likeable" associated with that user, if it exists.
+
+**Note:** The `link_to` helper can also take a `method` option. In that case, clicking the link will actually trigger a JavaScript event that submits a hidden form which is generated alongside the link. Therefore, you should stick with `button_to` if you don't want to rely on JavaScript.
 
 ### Step 4: Controller
 
