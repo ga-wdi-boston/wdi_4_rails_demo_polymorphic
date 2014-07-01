@@ -3,10 +3,12 @@ Rails.application.routes.draw do
 
   resources :statuses, only: [:show, :new, :create] do
     resources :comments, only: [:new, :create]
+    resources :likes, only: [:create, :destroy]
   end
 
   resources :links, only: [:show, :new, :create] do
     resources :comments, only: [:new, :create]
+    resources :likes, only: [:create, :destroy]
   end
 
   root 'home#show'
