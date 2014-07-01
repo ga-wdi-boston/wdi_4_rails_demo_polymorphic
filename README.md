@@ -244,3 +244,27 @@ Let's say we now want to allow signed-in users to "like" both statuses and links
 ### Step 1: Models
 
 Generate a migration and create a Like model using the same steps we did for the Comment model. The only difference is that likes don't have "content". Play around with the associations in the console to verify that you can create and destroy likes, and find out whether a given status/link is liked by a given user.
+
+### Step 2: Routes
+
+Come up with a routing scheme for Likes. This will be somewhat similar to Comments, with some differences: We don't need a form to create a new like, but we do need to be able to destroy likes (to un-like something).
+
+### Step 3: Buttons
+
+In the `_link.html.erb` and `_status.html.erb` partials, create a button that will submit to the appropriate Like route, depending on whether the current user has already "liked" the link/status or not. The [`button_to`](http://api.rubyonrails.org/classes/ActionView/Helpers/UrlHelper.html#method-i-button_to) helper is useful here: It creates a form consisting only of a single button that sends a request to the specified path, using the specified HTTP verb.
+
+For example, this would construct a "create Like" button for the Status partial:
+
+```erb
+<%= button_to 'Like', status_likes_path, method: :post %>
+```
+
+It's up to you how to handle the like/unlike conditional, but keep in mind that we want to avoid accessing ActiveRecord methods directly from our views. You might want to create a `like_for(likeable)` method on your User model that finds the Like object for a given "likeable" associated with that user, if it exists.
+
+### Step 4: Controller
+
+Create a controller for Likes that will handle the requests from the like/unlike buttons. This will look quite similar to our Comments controller, but simpler, since we have no need to check for validation success or even accept any parameters.
+
+### Checkpoint
+
+The `done-likes` branch contains all work completed up to this point.
