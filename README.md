@@ -126,8 +126,8 @@ There's a small problem here: Both sets of nested routes map to the same actions
 
 We'll worry about this later &ndash; for now, let's build the new comment form:
 
-```ruby
-# Create this in app/views/comments/new.html.erb
+```erb
+<% # Create this in app/views/comments/new.html.erb %>
 <%= form_for [@commentable, @comment] do |f| %>
   <div class="field">
     <%= f.label :content, 'Write a comment' %><br>
@@ -143,13 +143,13 @@ Note the parameter to `form_for` is an array rather than a single object. Rails 
 
 Now we just need a link to this form before we can get started on the controller:
 
-```ruby
-# Add to the bottom of app/views/links/show.html.erb
+```erb
+<% # Add to the bottom of app/views/links/show.html.erb %>
 <p><%= link_to 'Leave a comment', new_link_comment_path(@link) %></p>
 ```
 
-```ruby
-# Add to the bottom of app/views/statuses/show.html.erb
+```erb
+<% # Add to the bottom of app/views/statuses/show.html.erb %>
 <p><%= link_to 'Leave a comment', new_status_comment_path(@status) %></p>
 ```
 
