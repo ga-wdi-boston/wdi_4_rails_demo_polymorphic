@@ -61,12 +61,12 @@ Now to link up the other ends of the relationships:
 
 ```ruby
 # Add this to user.rb
-has_many :comments
+has_many :comments, dependent: :destroy
 ```
 
 ```ruby
 # Add this to both status.rb and link.rb
-has_many :comments, as: :commentable
+has_many :comments, as: :commentable, dependent: :destroy
 ```
 
 The `as` option tells Rails that, if we wanted to go from a Comment back to the Status or Link, we would have to call `comment.commentable` and not `comment.status` or `comment.link` as you might normally expect.
@@ -240,3 +240,7 @@ The `done-comments` branch contains all work completed up to this point.
 ## Lab: Likes
 
 Let's say we now want to allow signed-in users to "like" both statuses and links. In some respects this will be easier than commenting, since there will be no separate "new like" page with a form on it &ndash; we can just have a button that directly likes or un-likes the model in question, with no possibility of validation errors.
+
+### Step 1: Models
+
+Generate a migration and create a Like model using the same steps we did for the Comment model. The only difference is that likes don't have "content". Play around with the associations in the console to verify that you can create and destroy likes, and find out whether a given status/link is liked by a given user.
